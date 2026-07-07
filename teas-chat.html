@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat with TEAS Gurus — We reply fast</title>
+  <style>
+    :root {
+      --purple: #6c4dff;
+      --purple-dark: #5437e8;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --card: #ffffff;
+      --page: #f5f7fb;
+      --whatsapp: #25d366;
+      --imessage: #0a84ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0%, var(--page) 48%, #eef2ff 100%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 430px;
+      text-align: center;
+    }
+
+    .brand {
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+      color: var(--purple);
+      margin-bottom: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      border-radius: 28px;
+      padding: 34px 24px 28px;
+      box-shadow: 0 22px 60px rgba(17, 24, 39, 0.10);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 27px;
+      line-height: 1.18;
+      letter-spacing: -0.045em;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .fast {
+      margin: 10px 0 30px;
+      font-size: 17px;
+      line-height: 1.45;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .choose {
+      margin-bottom: 14px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #374151;
+    }
+
+    .chat-btn {
+      width: 100%;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      text-decoration: none;
+      color: #ffffff;
+      margin: 0;
+      box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .chat-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px rgba(17, 24, 39, 0.14);
+      filter: brightness(1.01);
+    }
+
+    .chat-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 20px rgba(17, 24, 39, 0.10);
+    }
+
+    .whatsapp {
+      background: var(--whatsapp);
+    }
+
+    .imessage {
+      background: var(--imessage);
+    }
+
+    .btn-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: 4px;
+    }
+
+    .btn-title {
+      font-size: 17px;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .btn-sub {
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+
+    .chev {
+      flex: 0 0 auto;
+      font-size: 34px;
+      font-weight: 300;
+      line-height: 1;
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .or {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #9ca3af;
+      font-size: 13px;
+      font-weight: 900;
+      margin: 18px 0;
+      letter-spacing: 0.06em;
+    }
+
+    .or::before,
+    .or::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #6b7280;
+      font-weight: 700;
+    }
+
+    .site {
+      margin-top: 7px;
+      display: block;
+      color: var(--purple-dark);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        align-items: flex-start;
+        padding: 28px 16px;
+      }
+
+      .wrap {
+        margin-top: 18px;
+      }
+
+      .brand {
+        font-size: 27px;
+        margin-bottom: 24px;
+      }
+
+      .card {
+        border-radius: 26px;
+        padding: 32px 18px 26px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .chat-btn {
+        min-height: 76px;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand">TEAS Gurus</div>
+
+    <section class="card" aria-label="Chat contact options">
+      <h1>Have questions? Chat with us directly.</h1>
+      <p class="fast">We reply fast!</p>
+
+      <div class="choose">Choose how to reach us</div>
+
+      <!-- Replace 254712345678 with your WhatsApp number in international format, without + or spaces. -->
+      <a
+        class="chat-btn whatsapp"
+        href="https://wa.me/254712345678?text=Hi%2C%20I%20came%20from%20TikTok%20and%20I%20need%20TEAS%20practice%20questions"
+      >
+        <span class="btn-copy">
+          <span class="btn-title">Message on WhatsApp</span>
+          <span class="btn-sub">Tap to open WhatsApp chat</span>
+        </span>
+        <span class="chev" aria-hidden="true">›</span>
+      </a>
+
+      <div class="or">OR</div>
+
+      <!-- Replace +12505550199 with your iMessage/SMS number. -->
+      <a
+        class="chat-btn imessage"
+        href="sms:+12505550199"
+      >
+        <span class="btn-copy">
+          <span class="btn-title">Message on iMessage</span>
+          <span class="btn-sub">Opens Messages on iPhone/Mac</span>
+        </span>
+        <span class="chev" aria-hidden="true">›</span>
+      </a>
+
+      <div class="footer">
+        TEAS 7 Exam Prep · Fast Study Support
+        <a class="site" href="https://teasgurus.com">teasgurus.com</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
