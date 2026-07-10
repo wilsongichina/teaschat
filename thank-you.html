@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You | TEAS CHAT</title>
+  <style>
+    :root {
+      --purple: #6c4dff;
+      --purple-dark: #5437e8;
+      --text: #111827;
+      --muted: #6b7280;
+      --card: #ffffff;
+      --page: #f5f7fb;
+      --whatsapp: #25d366;
+      --imessage: #0a84ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0%, var(--page) 48%, #eef2ff 100%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 620px;
+      text-align: center;
+    }
+
+    .brand {
+      margin: 0 0 20px;
+      color: var(--purple);
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      border-radius: 24px;
+      padding: 34px 28px 30px;
+      box-shadow: 0 22px 60px rgba(17, 24, 39, 0.10);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 54px;
+      height: 54px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      background: #f4f1ff;
+      color: var(--purple-dark);
+      font-size: 30px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 32px;
+      line-height: 1.12;
+      font-weight: 900;
+    }
+
+    p {
+      margin: 0;
+      color: #374151;
+      font-size: 16px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+
+    .steps {
+      margin: 24px 0 0;
+      padding: 0;
+      list-style: none;
+      text-align: left;
+    }
+
+    .steps li {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f9fafb;
+      color: #374151;
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .contact-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .contact-btn {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 900;
+      box-shadow: 0 10px 22px rgba(17, 24, 39, 0.10);
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+    }
+
+    .contact-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(17, 24, 39, 0.14);
+      filter: brightness(1.04);
+    }
+
+    .whatsapp {
+      background: var(--whatsapp);
+    }
+
+    .imessage {
+      background: var(--imessage);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        align-items: flex-start;
+        padding: 28px 16px;
+      }
+
+      .card {
+        padding: 30px 18px 26px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .contact-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="brand">TEAS CHAT</div>
+    <section class="card" aria-label="Purchase confirmation">
+      <div class="badge" aria-hidden="true">✓</div>
+      <h1>Thank you for your purchase.</h1>
+      <p>Your TEAS materials have been sent to the email address you used during checkout.</p>
+
+      <ul class="steps">
+        <li>Check the inbox for the email address used at checkout.</li>
+        <li>If you do not see the materials, check your spam or junk folder.</li>
+        <li>If you still cannot find them, contact us through WhatsApp or iMessage and we will help.</li>
+      </ul>
+
+      <div class="contact-actions" aria-label="Contact options">
+        <a
+          class="contact-btn whatsapp"
+          href="https://wa.me/19179147559?text=Hi%2C%20I%20purchased%20the%2011%20TEAS%20sets%20but%20I%20cannot%20find%20the%20materials%20in%20my%20email"
+        >
+          Contact on WhatsApp
+        </a>
+
+        <a
+          class="contact-btn imessage"
+          href="sms:wilsongichina2@gmail.com"
+        >
+          Contact on iMessage
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
