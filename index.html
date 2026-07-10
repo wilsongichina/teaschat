@@ -4,15 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chat with TEAS CHAT — We reply fast</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --purple: #6c4dff;
-      --purple-dark: #5437e8;
-      --text: #111827;
-      --muted: #6b7280;
-      --border: #e5e7eb;
+      --purple: #6a5cff;
+      --purple-dark: #4f46e5;
+      --text: #202437;
+      --muted: #7a819c;
+      --border: #e0e3f0;
       --card: #ffffff;
-      --page: #f5f7fb;
+      --page: #f5f6fb;
       --whatsapp: #25d366;
       --imessage: #0a84ff;
     }
@@ -24,8 +27,15 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, #ffffff 0%, var(--page) 48%, #eef2ff 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      background:
+        radial-gradient(circle at top, rgba(106, 92, 255, 0.08), transparent 55%),
+        radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.05), transparent 55%),
+        var(--page);
       color: var(--text);
       display: flex;
       align-items: center;
@@ -47,7 +57,7 @@
       color: #ffffff;
       font-size: 15px;
       line-height: 1.35;
-      font-weight: 900;
+      font-weight: 650;
       box-shadow: 0 14px 30px rgba(220, 38, 38, 0.24);
     }
 
@@ -60,28 +70,28 @@
     }
 
     .brand {
-      font-size: 28px;
+      font-size: 22px;
       line-height: 1;
-      font-weight: 900;
+      font-weight: 650;
       color: var(--purple);
       margin-bottom: 26px;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
     }
 
     .card {
       background: var(--card);
       border: 1px solid rgba(229, 231, 235, 0.9);
-      border-radius: 28px;
-      padding: 34px 24px 28px;
-      box-shadow: 0 22px 60px rgba(17, 24, 39, 0.10);
+      border-radius: 16px;
+      padding: 30px 24px 28px;
+      box-shadow: 0 18px 45px rgba(23, 35, 79, 0.08);
     }
 
     h1 {
       margin: 0;
-      font-size: 27px;
-      line-height: 1.18;
-      letter-spacing: -0.045em;
-      font-weight: 900;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      font-weight: 650;
       color: var(--text);
     }
 
@@ -90,13 +100,13 @@
       font-size: 17px;
       line-height: 1.45;
       color: var(--muted);
-      font-weight: 500;
+      font-weight: 450;
     }
 
     .choose {
       margin-bottom: 12px;
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 650;
       color: #374151;
     }
 
@@ -111,7 +121,7 @@
     .offer-or {
       color: #9ca3af;
       font-size: 12px;
-      font-weight: 900;
+      font-weight: 650;
       letter-spacing: 0.06em;
     }
 
@@ -121,11 +131,11 @@
       align-items: center;
       justify-content: center;
       padding: 13px 12px;
-      border-radius: 18px;
+      border-radius: 999px;
       text-decoration: none;
       font-size: 14px;
       line-height: 1.25;
-      font-weight: 900;
+      font-weight: 650;
       text-align: center;
       box-shadow: 0 10px 22px rgba(17, 24, 39, 0.10);
       transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
@@ -173,11 +183,11 @@
       justify-content: space-between;
       gap: 16px;
       padding: 16px 18px;
-      border-radius: 18px;
+      border-radius: 999px;
       text-decoration: none;
       color: #ffffff;
       margin: 0;
-      box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
+      box-shadow: 0 14px 34px rgba(106, 92, 255, 0.18);
       transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
       -webkit-tap-highlight-color: transparent;
     }
@@ -204,22 +214,23 @@
     .btn-copy {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
+      align-items: center;
+      text-align: center;
       gap: 4px;
+      flex: 1;
     }
 
     .btn-title {
       font-size: 17px;
       line-height: 1.1;
-      font-weight: 900;
+      font-weight: 650;
       letter-spacing: -0.02em;
     }
 
     .btn-sub {
       font-size: 13px;
       line-height: 1.25;
-      font-weight: 700;
+      font-weight: 600;
       opacity: 0.9;
     }
 
@@ -238,7 +249,7 @@
       gap: 14px;
       color: #9ca3af;
       font-size: 13px;
-      font-weight: 900;
+      font-weight: 650;
       margin: 18px 0;
       letter-spacing: 0.06em;
     }
@@ -256,7 +267,7 @@
       font-size: 14px;
       line-height: 1.5;
       color: #6b7280;
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .footer-links {
@@ -268,7 +279,7 @@
       margin-top: 9px;
       font-size: 12px;
       line-height: 1.4;
-      font-weight: 800;
+      font-weight: 650;
     }
 
     .footer-links a {
@@ -286,7 +297,7 @@
       color: var(--purple-dark);
       text-decoration: none;
       font-size: 14px;
-      font-weight: 900;
+      font-weight: 650;
     }
 
     @media (max-width: 480px) {
@@ -305,12 +316,12 @@
       }
 
       .card {
-        border-radius: 26px;
+        border-radius: 16px;
         padding: 28px 16px 24px;
       }
 
       h1 {
-        font-size: 25px;
+        font-size: 22px;
       }
 
       .offer-actions {
