@@ -391,7 +391,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
       var trackingEndpoint = 'https://script.google.com/macros/s/AKfycbyytBHgXBdDgslVTUNchD30r_0hULEtY1GQcIV1Zbqamr1dKYMAyCgg-KiD3-Bdn1-f/exec';
-      var trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_id', 'ttclid'];
+      var trackingKeys = ['utm_source', 'utm_campaign', 'utm_id', 'ttclid'];
       var params = new URLSearchParams(window.location.search);
       var purchaseButton = document.querySelector('.purchase-btn');
 
@@ -407,15 +407,11 @@
         purchaseButton.addEventListener('click', function (event) {
           var checkoutUrl = purchaseButton.href;
           var payload = {
-            status: 'checkout_clicked',
-            amount: 100,
             utm_source: localStorage.getItem('utm_source') || '',
-            utm_medium: localStorage.getItem('utm_medium') || '',
             utm_campaign: localStorage.getItem('utm_campaign') || '',
             utm_id: localStorage.getItem('utm_id') || '',
             ttclid: localStorage.getItem('ttclid') || '',
-            page_url: window.location.href,
-            user_agent: navigator.userAgent
+            page_url: window.location.href
           };
 
           event.preventDefault();
