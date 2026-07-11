@@ -393,7 +393,10 @@
       var purchaseButton = document.querySelector('.purchase-btn');
 
       if (purchaseButton) {
-        purchaseButton.addEventListener('click', function () {
+        purchaseButton.addEventListener('click', function (event) {
+          var checkoutUrl = purchaseButton.href;
+
+          event.preventDefault();
           ttq.track('InitiateCheckout', {
             contents: [
               {
@@ -405,6 +408,10 @@
             value: 100,
             currency: 'USD'
           });
+
+          setTimeout(function () {
+            window.location.href = checkoutUrl;
+          }, 350);
         });
       }
     });
@@ -441,9 +448,7 @@
 
         <a
           class="offer-btn purchase-btn"
-          href="https://buy.stripe.com/dRmfZg6fA6xx2wy6C2dEs2o"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="https://buy.stripe.com/test_6oE9BOee31vL8dG4gg"
         >
           Purchase 11 Full Sets (Exact) - $100
         </a>
