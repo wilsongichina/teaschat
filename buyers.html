@@ -103,6 +103,13 @@
       transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
     }
 
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.46;
+      transform: none;
+      box-shadow: none;
+    }
+
     .btn:hover {
       transform: translateY(-1px);
       background: rgba(106, 92, 255, 0.08);
@@ -237,6 +244,29 @@
       overflow-x: auto;
     }
 
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 16px;
+      border-top: 1px dashed var(--border);
+      background: rgba(245, 246, 251, 0.54);
+    }
+
+    .page-info {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .page-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -315,8 +345,49 @@
         padding: 14px 12px 36px;
       }
 
+      .header,
+      .toolbar,
+      .pagination {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .actions,
+      .page-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
       .summary {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .stat {
+        padding: 12px;
+      }
+
+      .stat b {
+        font-size: 18px;
+      }
+
+      .search {
+        max-width: none;
+        border-radius: 999px;
+      }
+
+      .table-wrap {
+        margin: 0 -1px;
+      }
+
+      th,
+      td {
+        padding: 10px 11px;
       }
 
       .password-row {
@@ -326,6 +397,21 @@
       .login {
         margin-top: 28px;
         padding: 24px 16px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .page-info,
+      .status {
+        text-align: center;
       }
     }
   </style>
@@ -399,6 +485,13 @@
           </table>
           <div id="emptyState" class="empty hidden">No matching rows found.</div>
         </div>
+        <div class="pagination">
+          <div id="pageInfo" class="page-info">Showing 0 rows</div>
+          <div class="page-actions">
+            <button id="prevPageBtn" class="btn" type="button">Previous</button>
+            <button id="nextPageBtn" class="btn" type="button">Next</button>
+          </div>
+        </div>
       </section>
     </section>
   </main>
@@ -407,6 +500,8 @@
     var ADMIN_PASSWORD = '123456';
     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyytBHgXBdDgslVTUNchD30r_0hULEtY1GQcIV1Zbqamr1dKYMAyCgg-KiD3-Bdn1-f/exec';
     var buyersRows = [];
+    var currentPage = 1;
+    var rowsPerPage = 10;
     var jsonpCallbackName = 'teasBuyersCallback';
 
     var loginCard = document.getElementById('loginCard');
@@ -420,6 +515,9 @@
     var statusText = document.getElementById('statusText');
     var buyersBody = document.getElementById('buyersBody');
     var emptyState = document.getElementById('emptyState');
+    var pageInfo = document.getElementById('pageInfo');
+    var prevPageBtn = document.getElementById('prevPageBtn');
+    var nextPageBtn = document.getElementById('nextPageBtn');
 
     loginForm.addEventListener('submit', function (event) {
       event.preventDefault();
@@ -436,7 +534,18 @@
 
     refreshBtn.addEventListener('click', loadRows);
     lockBtn.addEventListener('click', lockDashboard);
+    prevPageBtn.addEventListener('click', function () {
+      if (currentPage > 1) {
+        currentPage -= 1;
+        renderRows();
+      }
+    });
+    nextPageBtn.addEventListener('click', function () {
+      currentPage += 1;
+      renderRows();
+    });
     searchInput.addEventListener('input', function () {
+      currentPage = 1;
       renderRows();
     });
 
@@ -467,7 +576,8 @@
           return;
         }
 
-        buyersRows = data.rows || [];
+        buyersRows = sortNewestFirst(data.rows || []);
+        currentPage = 1;
         renderRows();
         statusText.textContent = 'Loaded ' + buyersRows.length + ' rows.';
       };
@@ -503,11 +613,19 @@
           row.page_url
         ].join(' ').toLowerCase().includes(query);
       });
+      var totalPages = Math.max(1, Math.ceil(visibleRows.length / rowsPerPage));
+
+      if (currentPage > totalPages) {
+        currentPage = totalPages;
+      }
+
+      var startIndex = (currentPage - 1) * rowsPerPage;
+      var pagedRows = visibleRows.slice(startIndex, startIndex + rowsPerPage);
 
       buyersBody.innerHTML = '';
       emptyState.classList.toggle('hidden', visibleRows.length > 0);
 
-      visibleRows.forEach(function (row) {
+      pagedRows.forEach(function (row) {
         var tr = document.createElement('tr');
         var status = String(row.status || '').trim();
         var checkoutClicked = String(row.checkout_clicked || '').trim();
@@ -530,7 +648,30 @@
         buyersBody.appendChild(tr);
       });
 
+      pageInfo.textContent = getPageInfo(visibleRows.length, startIndex, pagedRows.length, currentPage, totalPages);
+      prevPageBtn.disabled = currentPage <= 1;
+      nextPageBtn.disabled = currentPage >= totalPages;
+
       updateSummary();
+    }
+
+    function sortNewestFirst(rows) {
+      return rows.slice().sort(function (a, b) {
+        return parseRowDate(b.timestamp) - parseRowDate(a.timestamp);
+      });
+    }
+
+    function parseRowDate(value) {
+      var time = new Date(value).getTime();
+      return isNaN(time) ? 0 : time;
+    }
+
+    function getPageInfo(total, startIndex, pageCount, page, totalPages) {
+      if (!total) {
+        return 'Showing 0 rows';
+      }
+
+      return 'Showing ' + (startIndex + 1) + '-' + (startIndex + pageCount) + ' of ' + total + ' rows · Page ' + page + ' of ' + totalPages;
     }
 
     function updateSummary() {
