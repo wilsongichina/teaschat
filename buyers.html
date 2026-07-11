@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buyers Dashboard | TEAS CHAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;650;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #6a5cff;
+      --purple-dark: #4f46e5;
+      --text: #202437;
+      --muted: #7a819c;
+      --soft: #a0a5bf;
+      --border: #e0e3f0;
+      --card: #ffffff;
+      --page: #f5f6fb;
+      --ok: #2baa60;
+      --warn: #b45309;
+      --bad: #b91c1c;
+      --shadow: 0 18px 45px rgba(23, 35, 79, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      background:
+        radial-gradient(circle at top, rgba(106, 92, 255, 0.08), transparent 55%),
+        radial-gradient(circle at 80% 20%, rgba(79, 70, 229, 0.05), transparent 55%),
+        var(--page);
+      color: var(--text);
+      padding: 18px 16px 44px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 8px 0 18px;
+    }
+
+    .brand {
+      margin: 0 0 10px;
+      color: var(--purple);
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+    }
+
+    .sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 450;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 38px;
+      border: 1px solid rgba(106, 92, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--purple-dark);
+      padding: 9px 14px;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 650;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(106, 92, 255, 0.08);
+      border-color: rgba(106, 92, 255, 0.42);
+      box-shadow: 0 12px 26px rgba(106, 92, 255, 0.12);
+    }
+
+    .btn-primary {
+      border: none;
+      background: linear-gradient(180deg, var(--purple), var(--purple-dark));
+      color: #ffffff;
+      box-shadow: 0 14px 34px rgba(106, 92, 255, 0.24);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(224, 227, 240, 0.95);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .login {
+      width: 100%;
+      max-width: 430px;
+      margin: 48px auto 0;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .login h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+    }
+
+    .login p {
+      margin: 8px 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 450;
+    }
+
+    .password-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--text);
+      padding: 10px 14px;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: rgba(106, 92, 255, 0.55);
+      box-shadow: 0 0 0 4px rgba(106, 92, 255, 0.16);
+    }
+
+    .error {
+      display: none;
+      margin-top: 12px;
+      color: var(--bad);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .stat {
+      padding: 14px;
+      border: 1px dashed rgba(106, 92, 255, 0.22);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.74);
+    }
+
+    .stat span {
+      display: block;
+      color: var(--soft);
+      font-size: 11px;
+      font-weight: 650;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat b {
+      display: block;
+      margin-top: 5px;
+      color: var(--text);
+      font-size: 20px;
+      line-height: 1.2;
+      font-weight: 650;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 14px 16px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .search {
+      max-width: 360px;
+      border-radius: 12px;
+    }
+
+    .status {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(224, 227, 240, 0.72);
+      text-align: left;
+      vertical-align: top;
+      font-size: 12px;
+    }
+
+    th {
+      color: var(--soft);
+      background: rgba(245, 246, 251, 0.72);
+      font-weight: 650;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    td {
+      color: #374151;
+      font-weight: 450;
+    }
+
+    .email {
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 24px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(106, 92, 255, 0.08);
+      color: var(--purple-dark);
+      font-size: 11px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .pill-paid {
+      background: rgba(43, 170, 96, 0.10);
+      color: var(--ok);
+    }
+
+    .pill-pending {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--warn);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .empty {
+      padding: 28px 16px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 650;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 14px 12px 36px;
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .password-row {
+        flex-direction: column;
+      }
+
+      .login {
+        margin-top: 28px;
+        padding: 24px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section id="loginCard" class="card login" aria-label="Dashboard login">
+      <div class="brand">TEAS CHAT</div>
+      <h2>Buyers Dashboard</h2>
+      <p>Enter the admin password to view buyer and campaign rows.</p>
+      <form id="loginForm" class="password-row">
+        <input id="passwordInput" type="password" autocomplete="current-password" placeholder="Password" />
+        <button class="btn btn-primary" type="submit">Unlock</button>
+      </form>
+      <div id="loginError" class="error">Wrong password.</div>
+    </section>
+
+    <section id="dashboard" class="hidden" aria-label="Buyers dashboard">
+      <header class="header">
+        <div>
+          <div class="brand">TEAS CHAT</div>
+          <h1>Buyers Dashboard</h1>
+          <p class="sub">Stripe buyer rows matched with TikTok campaign tracking data.</p>
+        </div>
+        <div class="actions">
+          <button id="refreshBtn" class="btn" type="button">Refresh</button>
+          <button id="lockBtn" class="btn" type="button">Lock</button>
+        </div>
+      </header>
+
+      <div class="summary">
+        <div class="stat">
+          <span>Total Rows</span>
+          <b id="totalRows">0</b>
+        </div>
+        <div class="stat">
+          <span>Paid Rows</span>
+          <b id="paidRows">0</b>
+        </div>
+        <div class="stat">
+          <span>Matched</span>
+          <b id="matchedRows">0</b>
+        </div>
+        <div class="stat">
+          <span>Total Amount</span>
+          <b id="totalAmount">$0</b>
+        </div>
+      </div>
+
+      <section class="card">
+        <div class="toolbar">
+          <input id="searchInput" class="search" type="search" placeholder="Search email, campaign, ttclid..." />
+          <div id="statusText" class="status">Locked</div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Status</th>
+                <th>Email</th>
+                <th>Amount</th>
+                <th>Source</th>
+                <th>Campaign</th>
+                <th>Campaign ID</th>
+                <th>ttclid</th>
+                <th>Page URL</th>
+              </tr>
+            </thead>
+            <tbody id="buyersBody"></tbody>
+          </table>
+          <div id="emptyState" class="empty hidden">No matching rows found.</div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    var ADMIN_PASSWORD = '123456';
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyytBHgXBdDgslVTUNchD30r_0hULEtY1GQcIV1Zbqamr1dKYMAyCgg-KiD3-Bdn1-f/exec';
+    var buyersRows = [];
+    var jsonpCallbackName = 'teasBuyersCallback';
+
+    var loginCard = document.getElementById('loginCard');
+    var dashboard = document.getElementById('dashboard');
+    var loginForm = document.getElementById('loginForm');
+    var passwordInput = document.getElementById('passwordInput');
+    var loginError = document.getElementById('loginError');
+    var refreshBtn = document.getElementById('refreshBtn');
+    var lockBtn = document.getElementById('lockBtn');
+    var searchInput = document.getElementById('searchInput');
+    var statusText = document.getElementById('statusText');
+    var buyersBody = document.getElementById('buyersBody');
+    var emptyState = document.getElementById('emptyState');
+
+    loginForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      if (passwordInput.value !== ADMIN_PASSWORD) {
+        loginError.style.display = 'block';
+        return;
+      }
+
+      loginError.style.display = 'none';
+      sessionStorage.setItem('teas_buyers_unlocked', 'yes');
+      showDashboard();
+    });
+
+    refreshBtn.addEventListener('click', loadRows);
+    lockBtn.addEventListener('click', lockDashboard);
+    searchInput.addEventListener('input', function () {
+      renderRows();
+    });
+
+    if (sessionStorage.getItem('teas_buyers_unlocked') === 'yes') {
+      showDashboard();
+    }
+
+    function showDashboard() {
+      loginCard.classList.add('hidden');
+      dashboard.classList.remove('hidden');
+      loadRows();
+    }
+
+    function lockDashboard() {
+      sessionStorage.removeItem('teas_buyers_unlocked');
+      dashboard.classList.add('hidden');
+      loginCard.classList.remove('hidden');
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
+
+    function loadRows() {
+      statusText.textContent = 'Loading...';
+
+      window[jsonpCallbackName] = function (data) {
+        if (!data || !data.ok) {
+          statusText.textContent = 'Unable to load rows.';
+          return;
+        }
+
+        buyersRows = data.rows || [];
+        renderRows();
+        statusText.textContent = 'Loaded ' + buyersRows.length + ' rows.';
+      };
+
+      var oldScript = document.getElementById('buyersJsonp');
+
+      if (oldScript) {
+        oldScript.remove();
+      }
+
+      var script = document.createElement('script');
+      script.id = 'buyersJsonp';
+      script.src = SCRIPT_URL + '?action=buyers&secret=' + encodeURIComponent(ADMIN_PASSWORD) + '&callback=' + encodeURIComponent(jsonpCallbackName) + '&t=' + Date.now();
+      script.onerror = function () {
+        statusText.textContent = 'Request failed.';
+      };
+      document.body.appendChild(script);
+    }
+
+    function renderRows() {
+      var query = searchInput.value.trim().toLowerCase();
+      var visibleRows = buyersRows.filter(function (row) {
+        if (!query) return true;
+
+        return [
+          row.timestamp,
+          row.status,
+          row.email,
+          row.utm_source,
+          row.utm_campaign,
+          row.utm_id,
+          row.ttclid,
+          row.page_url
+        ].join(' ').toLowerCase().includes(query);
+      });
+
+      buyersBody.innerHTML = '';
+      emptyState.classList.toggle('hidden', visibleRows.length > 0);
+
+      visibleRows.forEach(function (row) {
+        var tr = document.createElement('tr');
+        var status = String(row.status || '').trim();
+        var checkoutClicked = String(row.checkout_clicked || '').trim();
+        var statusLabel = status || checkoutClicked || 'tracking';
+        var statusClass = statusLabel === 'complete' || statusLabel === 'paid' || statusLabel === 'completed'
+          ? 'pill pill-paid'
+          : 'pill pill-pending';
+
+        tr.innerHTML =
+          '<td>' + escapeHtml(formatCell(row.timestamp)) + '</td>' +
+          '<td><span class="' + statusClass + '">' + escapeHtml(statusLabel) + '</span></td>' +
+          '<td class="email">' + escapeHtml(formatCell(row.email)) + '</td>' +
+          '<td>' + escapeHtml(formatAmount(row.amount)) + '</td>' +
+          '<td>' + escapeHtml(formatCell(row.utm_source)) + '</td>' +
+          '<td>' + escapeHtml(formatCell(row.utm_campaign)) + '</td>' +
+          '<td>' + escapeHtml(formatCell(row.utm_id)) + '</td>' +
+          '<td>' + escapeHtml(formatCell(row.ttclid)) + '</td>' +
+          '<td class="muted">' + escapeHtml(formatCell(row.page_url)) + '</td>';
+
+        buyersBody.appendChild(tr);
+      });
+
+      updateSummary();
+    }
+
+    function updateSummary() {
+      var paidRows = buyersRows.filter(function (row) {
+        var status = String(row.status || '').toLowerCase();
+        return status === 'paid' || status === 'complete' || status === 'completed';
+      });
+      var matchedRows = paidRows.filter(function (row) {
+        return row.utm_source || row.ttclid;
+      });
+      var total = paidRows.reduce(function (sum, row) {
+        var amount = parseFloat(row.amount);
+        return sum + (isNaN(amount) ? 0 : amount);
+      }, 0);
+
+      document.getElementById('totalRows').textContent = buyersRows.length;
+      document.getElementById('paidRows').textContent = paidRows.length;
+      document.getElementById('matchedRows').textContent = matchedRows.length;
+      document.getElementById('totalAmount').textContent = '$' + total.toFixed(2);
+    }
+
+    function formatCell(value) {
+      return value === undefined || value === null || value === '' ? '-' : String(value);
+    }
+
+    function formatAmount(value) {
+      var amount = parseFloat(value);
+      return isNaN(amount) ? '-' : '$' + amount.toFixed(2);
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
